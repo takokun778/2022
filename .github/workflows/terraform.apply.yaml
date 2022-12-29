@@ -1,6 +1,9 @@
 name: apply
 on:
   workflow_dispatch:
+defaults:
+  run:
+    working-directory: ./terraform
 env:
   COCKROACH_API_KEY: ${{ secrets.COCKROACH_API_KEY }}
   TF_TOKEN_app_terraform_io: ${{ secrets.TERRAFORM_CLOUD_API_TOKEN }}
