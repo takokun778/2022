@@ -13,6 +13,32 @@ tool: ## install tool
 ymlfmt: ## yaml file format
 	@yamlfmt
 
+.PHONY: db
+db:
+	@docker run --rm -d \
+		-p $(POSTGRES_PORT):5432 \
+		-e TZ=UTC \
+		-e LANG=ja_JP.UTF-8 \
+		-e POSTGRES_HOST_AUTH_METHOD=trust \
+		-e POSTGRES_DB=$(POSTGRES_DB) \
+		-e POSTGRES_USER=$(POSTGRES_USER) \
+		-e POSTGRES_PASSWORD=$(POSTGRES_PASS) \
+		-e POSTGRES_INITDB_ARGS=--encoding=UTF-8 \
+		--name $(CONTAINER_NAME) \
+		postgres:14.6-alpine
+
+.PHONY: psql
+psql:
+	@docker exec -it $(CONTAINER_NAME) psql -U postgres
+
+.PHONY: stop
+stop:
+	@docker stop $(CONTAINER_NAME)
+
+.PHONY: run
+run:
+	@go run app/cmd/main.go
+
 .PHONY: tfinit
 tfinit: ## Terraform initialize
 	@(cd terraform && terraform init)

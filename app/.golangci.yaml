@@ -1,0 +1,27 @@
+run:
+  timeout: 10m
+linters-settings:
+  varnamelen:
+    min-name-length: 1
+linters:
+  enable-all: true
+  disable:
+    - exhaustruct # nolint fill struct
+    - exhaustivestruct # nolint fill struct
+    - ifshort # deprecated since v1.48.0
+    - maligned # deprecated since v1.38.0
+    - varcheck # deprecated since v1.49.0
+    - scopelint # deprecated since v1.39.0
+    - deadcode # deprecated since v1.49.0
+    - golint # deprecated since v1.41.0
+    - interfacer # deprecated since v1.38.0
+    - structcheck # deprecated since v1.49.0
+    - nosnakecase # deprecated since v1.48.1
+    - rowserrcheck # disabled because of generics
+    - sqlclosecheck # disabled because of generics
+    - wastedassign # disabled because of generics
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - funlen
