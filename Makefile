@@ -28,11 +28,11 @@ tflint: ## Terraform format check and terraform validate
 
 .PHONY: tfplan
 tfplan: ## Terraform plan
-	@(cd terraform && terraform plan)
+	@(cd terraform && terraform plan -lock=false)
 
 .PHONY: tfapply
 tfapply: ## Terraform apply
-	@(cd terraform && terraform apply)
+	@(cd terraform && terraform apply -lock=false)
 
 .PHONY: help
 help: ## Display this help screen
