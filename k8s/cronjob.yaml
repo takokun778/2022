@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: hello
+  name: "2022"
 spec:
   schedule: "0 * * * *"
   jobTemplate:
@@ -9,11 +9,18 @@ spec:
       template:
         spec:
           containers:
-            - name: hello
-              image: busybox:1.28
+            - name: "2022"
+              image: ${IMAGE}
               imagePullPolicy: IfNotPresent
-              command:
-                - /bin/sh
-                - -c
-                - date; echo Hello from the Kubernetes cluster
-          restartPolicy: OnFailure
+              env:
+                - name: DATABASE_URL
+                  value: ${DATABASE_URL}
+                - name: GITHUB_OWNER
+                  value: ${GITHUB_OWNER}
+                - name: GITHUB_REPOSITORY
+                  value: ${GITHUB_REPOSITORY}
+                - name: SLACK_TOKEN
+                  value: ${SLACK_TOKEN}
+                - name: SLACK_CHANNEL_ID
+                  value: ${SLACK_CHANNEL_ID}
+          restartPolicy: Never

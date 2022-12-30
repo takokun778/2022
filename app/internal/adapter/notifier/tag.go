@@ -3,7 +3,6 @@ package notifier
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"github.com/slack-go/slack"
 	"github.com/takokun778/2022/internal/domain/external"
@@ -24,8 +23,6 @@ func NewTag(
 }
 
 func (t *Tag) Notice(ctx context.Context, msg string) error {
-	log.Println(msg)
-
 	if _, _, err := t.channel.PostMessage(t.channel.ID, slack.MsgOptionText(msg, true)); err != nil {
 		return fmt.Errorf("failed to post message: %w", err)
 	}

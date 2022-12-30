@@ -35,9 +35,15 @@ psql:
 stop:
 	@docker stop $(CONTAINER_NAME)
 
-.PHONY: run
-run:
-	@go run app/cmd/main.go
+.PHONY: kapply
+kapply:
+	@envsubst '$$IMAGE','$$DATABASE_URL','$$GITHUB_OWNER','$$GITHUB_REPOSITORY','$$SLACK_TOKEN','$$SLACK_CHANNEL_ID' < k8s/cronjob.yaml > tmp.yaml
+	@kubectl apply -f tmp.yaml
+	@rm tmp.yaml
+
+.PHONY: kdelete
+kdelete:
+	@kubectl delete -f k8s/cronjob.yaml
 
 .PHONY: tfinit
 tfinit: ## Terraform initialize
