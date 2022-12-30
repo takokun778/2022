@@ -9,5 +9,5 @@ import (
 
 type Tag interface {
 	SaveAll(context.Context, []model.Tag) error
-	FindAll(context.Context, tag.Repo) ([]model.Tag, error)
+	FindAll(context.Context, tag.Owner, tag.Repo) ([]model.Tag, error)
 }

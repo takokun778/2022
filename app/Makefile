@@ -21,9 +21,13 @@ lint: ## go lint
 tidy: ## go mod tidy
 	@go mod tidy
 
-.PHONY: run
-run:
-	@go run cmd/main.go
+.PHONY: migrate
+migrate:
+	@go run cmd/migrate/main.go
+
+.PHONY: notice
+notice:
+	@go run cmd/notice/main.go
 
 .PHONY: mod
 mod: ## go modules list
