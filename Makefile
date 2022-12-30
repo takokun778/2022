@@ -2,19 +2,19 @@ include .env
 export
 
 .PHONY: aqua
-aqua: ## insatll aqua
+aqua: ## Insatll aqua
 	@brew install aquaproj/aqua/aqua
 
 .PHONY: tool
-tool: ## install tool
+tool: ## Install tool
 	@aqua i
 
 .PHONY: ymlfmt
-ymlfmt: ## yaml file format
+ymlfmt: ## Format yaml file\
 	@yamlfmt
 
 .PHONY: db
-db:
+db: ## Start postgres by docker run
 	@docker run --rm -d \
 		-p $(POSTGRES_PORT):5432 \
 		-e TZ=UTC \
@@ -28,21 +28,21 @@ db:
 		postgres:14.6-alpine
 
 .PHONY: psql
-psql:
+psql: ## PSQL
 	@docker exec -it $(CONTAINER_NAME) psql -U postgres
 
-.PHONY: stop
-stop:
+.PHONY: dbstop
+dbstop: ## Stop postgres
 	@docker stop $(CONTAINER_NAME)
 
 .PHONY: kapply
-kapply:
+kapply: ## Apply kubernates by manifest file
 	@envsubst '$$IMAGE','$$DATABASE_URL','$$GITHUB_OWNER','$$GITHUB_REPOSITORY','$$SLACK_TOKEN','$$SLACK_CHANNEL_ID' < k8s/cronjob.yaml > tmp.yaml
 	@kubectl apply -f tmp.yaml
 	@rm tmp.yaml
 
 .PHONY: kdelete
-kdelete:
+kdelete: ## Delete kubernates
 	@kubectl delete -f k8s/cronjob.yaml
 
 .PHONY: tfinit
