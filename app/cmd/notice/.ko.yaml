@@ -1,0 +1,10 @@
+builds:
+  - id: 2022
+    dir: .
+    main: .
+    env:
+      - GOOS=linux
+      - GOARCH=amd64
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
